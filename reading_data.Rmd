@@ -3,3 +3,53 @@ title: "reading_data"
 output: github_document
 ---
 
+```{r}
+library(tidyverse)
+library(rvest)
+library(httr)
+```
+
+
+
+
+```{r}
+url = "https://www.samhsa.gov/data/sites/default/files/NSDUHsaeShortTermCHG2015/NSDUHsaeShortTermCHG2015.htm"
+
+drug_use_html = read_html(url)
+
+drug_use_html
+```
+
+
+pull the tables out
+
+```{r}
+
+marj_df =
+  drug_use_html |>
+  html_table() |>
+  first() |>  #first table
+  slice(-1)  #delete the first row
+```
+
+
+
+import starwars data
+
+
+
+```{r}
+
+swm_html = 
+  read_html_live("https://www.imdb.com/list/ls070150896/")
+```
+
+```{r}
+title_vec = 
+  swm_html |>
+  html_elements(".ipc-title__text") |>
+  html_text()
+```
+
+
+
