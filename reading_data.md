@@ -64,13 +64,31 @@ swm_html =
 ``` r
 title_vec = 
   swm_html |>
-  html_elements(".ipc-title__text") |>
+  html_elements(".ipc-title-link-wrapper .ipc-title__text") |>
   html_text()
+
+metascore_vec = 
+  swm_html |>
+  html_elements(".metacritic-score-box") |>
+  html_text()
+
+runtime_vec = 
+  swm_html |>
+  html_elements(".base .ipc-inline-list__item:nth-child(2)") |>
+  html_text()
+
+swm_df = 
+  tibble(
+    title = title_vec,
+    score = metascore_vec,
+    runtime = runtime_vec)
 ```
 
 0000000
 
 \##use apis
+
+get a csv
 
 ``` r
 nyc_water_df = 
@@ -88,3 +106,22 @@ nyc_water_df =
     ## 
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+get a json file
+
+``` r
+nyc_water = 
+  GET("https://data.cityofnewyork.us/api/v3/views/ia2d-e54m/query.json") |> 
+  content("text") |>
+  jsonlite::fromJSON() |>
+  as_tibble() |>
+  select(year:per_capita_gallons_per_person_per_day)
+```
+
+pokemon
+
+``` r
+pokemon_json= 
+  GET("http://pokeapi.co/api/v2/pokemon/668") |>
+  content()
+```
