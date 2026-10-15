@@ -67,3 +67,24 @@ title_vec =
   html_elements(".ipc-title__text") |>
   html_text()
 ```
+
+0000000
+
+\##use apis
+
+``` r
+nyc_water_df = 
+  GET("https://data.cityofnewyork.us/api/v3/views/ia2d-e54m/query.csv") |> 
+  content("parsed") |>
+  select(year:per_capita_gallons_per_person_per_day)
+```
+
+    ## Rows: 65 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr  (2): :id, :version
+    ## dbl  (4): year, new_york_city_population, nyc_consumption_million_gallons_pe...
+    ## dttm (2): :created_at, :updated_at
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
